@@ -2,7 +2,7 @@ import path from "path";
 import crypto from "crypto";
 import multer, { Options } from "multer";
 
-import AppError from "../errors/AppError";
+import AppError from "@shared/errors/AppError";
 
 interface Directory {
   directory: string;
