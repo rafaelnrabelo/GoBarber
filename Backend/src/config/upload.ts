@@ -4,14 +4,16 @@ import multer, { Options } from "multer";
 
 import AppError from "@shared/errors/AppError";
 
-interface Directory {
-  directory: string;
+interface Directories {
+  tmpFolder: string;
+  uploadsFolder: string;
 }
 
 const tempFolder = path.resolve(__dirname, "..", "..", "tmp");
 
 export default {
-  directory: tempFolder,
+  tmpFolder: tempFolder,
+  uploadsFolder: path.resolve(tempFolder, "uploads"),
   storage: multer.diskStorage({
     destination: tempFolder,
     filename(req, file, callback) {
@@ -28,4 +30,4 @@ export default {
     }
     callback(null, true);
   },
-} as Options & Directory;
+} as Options & Directories;
