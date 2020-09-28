@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 
 import IUsersRepository from "@modules/users/repositories/IUsersRepository";
 import ICreateUserDTO from "@modules/users/dtos/ICreateUserDTO";
+import IFindAllProvidersDTO from "@modules/users/dtos/IFindAllProvidersDTO";
 
 import User from "@modules/users/infra/typeorm/entities/User";
 
@@ -22,6 +23,16 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  public async save(user: User): Promise<User> {
+    const findIndex = this.users.findIndex(
+      (findUser) => findUser.id === user.id
+    );
+
+    this.users[findIndex] = user;
+
+    return user;
+  }
+
   public async findById(id: string): Promise<User | undefined> {
     const findUser = this.users.find((user) => user.id === id);
 
@@ -34,14 +45,18 @@ class UsersRepository implements IUsersRepository {
     return findUser;
   }
 
-  public async save(user: User): Promise<User> {
-    const findIndex = this.users.findIndex(
-      (findUser) => findUser.id === user.id
-    );
+  public async findAllProviders({
+    except_user_id,
+  }: IFindAllProvidersDTO): Promise<User[]> {
+    let findProviders = this.users;
 
-    this.users[findIndex] = user;
+    if (except_user_id) {
+      findProviders = findProviders.filter(
+        (user) => user.id !== except_user_id
+      );
+    }
 
-    return user;
+    return findProviders;
   }
 }
 

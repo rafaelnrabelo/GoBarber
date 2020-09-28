@@ -12,14 +12,9 @@ class ProfileController {
 
     const user = await showProfile.execute(user_id);
 
-    return res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-    });
+    delete user.password;
+
+    return res.json(user);
   }
 
   public static async update(req: Request, res: Response): Promise<Response> {
@@ -36,14 +31,9 @@ class ProfileController {
       password,
     });
 
-    return res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-    });
+    delete user.password;
+
+    return res.json(user);
   }
 }
 
