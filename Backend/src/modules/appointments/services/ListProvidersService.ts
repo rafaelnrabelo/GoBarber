@@ -10,9 +10,9 @@ class ListProvidersService {
     private usersRepository: IUsersRepository
   ) {}
 
-  public async execute(user_id?: string): Promise<User[]> {
+  public async execute(provider_id?: string): Promise<User[]> {
     const users = await this.usersRepository.findAllProviders({
-      except_user_id: user_id,
+      except_user_id: provider_id,
     });
 
     return users;
