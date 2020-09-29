@@ -33,8 +33,12 @@ describe("CreateAppointment", () => {
       password: "123456",
     });
 
+    jest.spyOn(Date, "now").mockImplementationOnce(() => {
+      return new Date(2020, 0, 10, 12).getTime();
+    });
+
     const appointment = await createAppointment.execute({
-      date: new Date(),
+      date: new Date(2020, 0, 10, 13),
       provider_id: providerUser.id,
       user_id: customerUser.id,
     });
@@ -57,7 +61,11 @@ describe("CreateAppointment", () => {
       password: "123456",
     });
 
-    const appointmentDate = new Date(2020, 8, 25, 17);
+    jest.spyOn(Date, "now").mockImplementation(() => {
+      return new Date(2020, 0, 10, 10).getTime();
+    });
+
+    const appointmentDate = new Date(2020, 0, 10, 13);
 
     await createAppointment.execute({
       date: appointmentDate,
@@ -74,7 +82,67 @@ describe("CreateAppointment", () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to create a appointment with a non existing provider or customer", async () => {
+  it("should not be able to create an appointment on a past date", async () => {
+    const providerUser = await fakeUsersRepository.create({
+      name: "Test",
+      email: "test@test.com",
+      password: "123456",
+    });
+
+    const customerUser = await fakeUsersRepository.create({
+      name: "Test2",
+      email: "test2@test.com",
+      password: "123456",
+    });
+
+    jest.spyOn(Date, "now").mockImplementationOnce(() => {
+      return new Date(2020, 0, 10, 12).getTime();
+    });
+
+    await expect(
+      createAppointment.execute({
+        date: new Date(2020, 0, 10, 11),
+        provider_id: providerUser.id,
+        user_id: customerUser.id,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("should not be able to create an appointment before 8am or after 5pm", async () => {
+    const providerUser = await fakeUsersRepository.create({
+      name: "Test",
+      email: "test@test.com",
+      password: "123456",
+    });
+
+    const customerUser = await fakeUsersRepository.create({
+      name: "Test2",
+      email: "test2@test.com",
+      password: "123456",
+    });
+
+    jest.spyOn(Date, "now").mockImplementation(() => {
+      return new Date(2020, 0, 10, 12).getTime();
+    });
+
+    await expect(
+      createAppointment.execute({
+        date: new Date(2020, 0, 11, 7),
+        provider_id: providerUser.id,
+        user_id: customerUser.id,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+
+    await expect(
+      createAppointment.execute({
+        date: new Date(2020, 0, 11, 18),
+        provider_id: providerUser.id,
+        user_id: customerUser.id,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("should not be able to create an appointment with a non existing provider or customer", async () => {
     await expect(
       createAppointment.execute({
         date: new Date(),
@@ -84,7 +152,7 @@ describe("CreateAppointment", () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to create a appointment with provider and customer been the same", async () => {
+  it("should not be able to create an appointment with provider and customer been the same", async () => {
     const user = await fakeUsersRepository.create({
       name: "Test",
       email: "test@test.com",
