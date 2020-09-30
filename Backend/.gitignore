@@ -15,10 +15,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
-.vscode/
 build/
 temp/
 
 tmp/*
 !tmp/.gitkeep
-!tmp/uploads/.gitkeep
