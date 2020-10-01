@@ -2,6 +2,7 @@ import { container } from "tsyringe";
 import { Request, Response } from "express";
 
 import ListProvidersService from "@modules/appointments/services/ListProvidersService";
+import { classToClass } from "class-transformer";
 
 class ProvidersController {
   public static async index(req: Request, res: Response): Promise<Response> {
@@ -15,7 +16,7 @@ class ProvidersController {
       delete provider.password;
     });
 
-    return res.json(providers);
+    return res.json(classToClass(providers));
   }
 }
 

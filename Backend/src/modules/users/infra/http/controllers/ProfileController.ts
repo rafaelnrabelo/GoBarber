@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 
 import UpdateProfileService from "@modules/users/services/UpdateProfileService";
 import ShowProfileService from "@modules/users/services/ShowProfileService";
+import { classToClass } from "class-transformer";
 
 class ProfileController {
   public static async show(req: Request, res: Response): Promise<Response> {
@@ -12,9 +13,7 @@ class ProfileController {
 
     const user = await showProfile.execute(user_id);
 
-    delete user.password;
-
-    return res.json(user);
+    return res.json(classToClass(user));
   }
 
   public static async update(req: Request, res: Response): Promise<Response> {
@@ -31,9 +30,7 @@ class ProfileController {
       password,
     });
 
-    delete user.password;
-
-    return res.json(user);
+    return res.json(classToClass(user));
   }
 }
 
