@@ -21,6 +21,7 @@ coverage
 
 tmp/*
 !tmp/.gitkeep
+!tmp/uploads/.gitkeep
 
 .env
 ormconfig.json
