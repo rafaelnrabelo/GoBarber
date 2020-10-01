@@ -9,8 +9,7 @@ interface TokenPayload {
   exp: number;
   sub: string;
 }
-
-export default function ensureAuthenticated(
+function ensureAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction
@@ -38,3 +37,5 @@ export default function ensureAuthenticated(
     throw new AppError("Invalid JWT token.", 401);
   }
 }
+
+export default ensureAuthenticated;
