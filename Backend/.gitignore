@@ -17,6 +17,10 @@ yarn-error.log*
 .idea/
 build/
 temp/
+coverage
 
 tmp/*
 !tmp/.gitkeep
+
+.env
+ormconfig.json

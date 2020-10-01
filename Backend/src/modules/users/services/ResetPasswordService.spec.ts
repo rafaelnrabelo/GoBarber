@@ -35,7 +35,7 @@ describe("ResetPassword", () => {
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
 
-    await resetPasswordService.execute(token, "newPassword");
+    await resetPasswordService.execute(token, "newPassword", "newPassword");
 
     expect(generateHash).toBeCalledWith("newPassword");
     expect(user.password).toBe("newPassword");
@@ -43,7 +43,11 @@ describe("ResetPassword", () => {
 
   it("should not be able to reset the password with a invalid userToken", async () => {
     await expect(
-      resetPasswordService.execute("invalidUserToken", "newPassword")
+      resetPasswordService.execute(
+        "invalidUserToken",
+        "newPassword",
+        "newPassword"
+      )
     ).rejects.toBeInstanceOf(AppError);
   });
 
@@ -51,7 +55,7 @@ describe("ResetPassword", () => {
     const { token } = await fakeUserTokensRepository.generate("invalidUserId");
 
     await expect(
-      resetPasswordService.execute(token, "newPassword")
+      resetPasswordService.execute(token, "newPassword", "newPassword")
     ).rejects.toBeInstanceOf(AppError);
   });
 
@@ -71,7 +75,21 @@ describe("ResetPassword", () => {
     });
 
     await expect(
-      resetPasswordService.execute(token, "newPassword")
+      resetPasswordService.execute(token, "newPassword", "newPassword")
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("should not be able to reset without confirm the password", async () => {
+    const user = await fakeUsersRepository.create({
+      name: "Test",
+      email: "test@test.com",
+      password: "123456",
+    });
+
+    const { token } = await fakeUserTokensRepository.generate(user.id);
+
+    await expect(
+      resetPasswordService.execute(token, "newPassword", "invalidConfirmation")
     ).rejects.toBeInstanceOf(AppError);
   });
 });

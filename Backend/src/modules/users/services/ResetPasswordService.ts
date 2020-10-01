@@ -20,7 +20,11 @@ class SendForgotPasswordEmailService {
     private hashProvider: IHashProvider
   ) {}
 
-  public async execute(token: string, password: string): Promise<void> {
+  public async execute(
+    token: string,
+    password: string,
+    password_confirmation: string
+  ): Promise<void> {
     const userToken = await this.userTokensRepository.findByToken(token);
 
     if (!userToken) {
@@ -37,6 +41,10 @@ class SendForgotPasswordEmailService {
 
     if (isAfter(Date.now(), compareDate)) {
       throw new AppError("Token expired.");
+    }
+
+    if (password !== password_confirmation) {
+      throw new AppError("The password must be confirmed");
     }
 
     user.password = await this.hashProvider.generateHash(password);
