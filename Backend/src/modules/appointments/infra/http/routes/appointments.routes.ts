@@ -20,6 +20,16 @@ appointmentsRouter.post(
   }),
   AppointmentsController.create
 );
-appointmentsRouter.post("/me", ProviderAppointmentsController.index);
+appointmentsRouter.get(
+  "/me",
+  celebrate({
+    [Segments.QUERY]: {
+      day: Joi.number().required(),
+      month: Joi.number().required(),
+      year: Joi.number().required(),
+    },
+  }),
+  ProviderAppointmentsController.index
+);
 
 export default appointmentsRouter;

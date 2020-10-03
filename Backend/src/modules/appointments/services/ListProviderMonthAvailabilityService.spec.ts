@@ -97,6 +97,10 @@ describe("ListProviderMonthAvailability", () => {
       date: new Date(2020, 0, 3, 8, 0, 0),
     });
 
+    jest.spyOn(Date, "now").mockImplementationOnce(() => {
+      return new Date(2020, 0, 2, 10, 0, 0).getTime();
+    });
+
     const providerAvailability = await listProviderMonthAvailability.execute({
       provider_id: providerUser.id,
       month: 1,
@@ -105,7 +109,7 @@ describe("ListProviderMonthAvailability", () => {
 
     expect(providerAvailability).toEqual(
       expect.arrayContaining([
-        { day: 1, available: true },
+        { day: 1, available: false },
         { day: 2, available: false },
         { day: 3, available: true },
         { day: 4, available: true },

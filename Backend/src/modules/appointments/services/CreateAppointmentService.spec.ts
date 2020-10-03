@@ -56,7 +56,7 @@ describe("CreateAppointment", () => {
     expect(appointment.user_id).toBe(customerUser.id);
   });
 
-  it("should not be able to create two appointments on the same time", async () => {
+  it("should not be able to create two appointments on the same time with the same provider", async () => {
     const providerUser = await fakeUsersRepository.create({
       name: "Test",
       email: "test@test.com",

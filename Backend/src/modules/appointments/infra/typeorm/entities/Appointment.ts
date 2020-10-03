@@ -25,7 +25,10 @@ class Appointment {
   @Column({ nullable: true })
   user_id: string;
 
-  @ManyToOne(() => User, { onDelete: "SET NULL", onUpdate: "CASCADE" })
+  @ManyToOne(() => User, {
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
+  })
   @JoinColumn({ name: "user_id" })
   user: User;
 

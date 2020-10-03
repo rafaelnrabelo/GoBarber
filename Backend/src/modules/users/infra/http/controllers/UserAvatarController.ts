@@ -1,8 +1,8 @@
 import { container } from "tsyringe";
 import { Request, Response } from "express";
+import { classToClass } from "class-transformer";
 
 import UpdateUserAvatarService from "@modules/users/services/UpdateUserAvatarService";
-import { classToClass } from "class-transformer";
 
 class UserAvatarController {
   public static async update(req: Request, res: Response): Promise<Response> {
