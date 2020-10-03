@@ -26,6 +26,16 @@ class UserTokensRepository implements IUserTokensRepository {
 
     return findUserToken;
   }
+
+  public async invalidate(token: string): Promise<void> {
+    const findUserToken = await this.ormRepository.findOne({
+      where: { token },
+    });
+
+    if (findUserToken) {
+      await this.ormRepository.remove(findUserToken);
+    }
+  }
 }
 
 export default UserTokensRepository;

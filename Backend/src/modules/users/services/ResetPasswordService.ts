@@ -28,7 +28,7 @@ class SendForgotPasswordEmailService {
     const userToken = await this.userTokensRepository.findByToken(token);
 
     if (!userToken) {
-      throw new AppError("User token does not exists.");
+      throw new AppError("Invalid user token.");
     }
 
     const user = await this.usersRepository.findById(userToken.user_id);
@@ -50,6 +50,8 @@ class SendForgotPasswordEmailService {
     user.password = await this.hashProvider.generateHash(password);
 
     await this.usersRepository.save(user);
+
+    await this.userTokensRepository.invalidate(token);
   }
 }
 

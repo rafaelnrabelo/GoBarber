@@ -29,6 +29,12 @@ class FakeUserTokensRepository implements IUserTokensRepository {
 
     return findUserToken;
   }
+
+  public async invalidate(token: string): Promise<void> {
+    this.userTokens = this.userTokens.filter(
+      (userToken) => userToken.token !== token
+    );
+  }
 }
 
 export default FakeUserTokensRepository;
