@@ -40,6 +40,7 @@ class SendForgotPasswordEmailService {
     const compareDate = addHours(userToken.created_at, 2);
 
     if (isAfter(Date.now(), compareDate)) {
+      await this.userTokensRepository.invalidate(token);
       throw new AppError("Token expired.");
     }
 
