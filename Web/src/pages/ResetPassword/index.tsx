@@ -37,12 +37,14 @@ const ForgotPassword: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          password: Yup.string().required("Senha é necessária"),
+          password: Yup.string()
+            .required("Senha é necessária")
+            .min(6, "Senha deve ter pelo menos 6 caracteres"),
           password_confirmation: Yup.string()
-            .required("A confirmação da senha é necessária")
+            .required("Confirmação da senha é necessária")
             .oneOf(
               [Yup.ref("password")],
-              "A confirmação da senha deve ser igual a nova senha"
+              "Confirmação da senha deve ser igual a nova senha"
             ),
         });
 
