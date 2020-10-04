@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { RateLimiterRedis } from "rate-limiter-flexible";
-import Redis, { Redis as RedisClient } from "ioredis";
+import Redis from "ioredis";
 
 import cacheConfig from "@config/cache";
 import AppError from "@shared/errors/AppError";

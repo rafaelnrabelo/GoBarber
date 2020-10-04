@@ -16,8 +16,6 @@ import "@shared/container";
 
 const app = express();
 
-app.use(RateLimiter);
-
 app.use(cors());
 
 app.use(express.json());
@@ -25,6 +23,8 @@ app.use(express.json());
 app.use("/files", express.static(uploadConfig.uploadsFolder));
 
 app.use(express.static("src/modules/users/views/assets"));
+
+app.use(RateLimiter);
 
 app.use(routes);
 
