@@ -8,6 +8,8 @@ import { StatusBar } from "react-native";
 
 interface NotificationContextData {
   addNotification(notification: Notification): void;
+  error: boolean;
+  success: boolean;
 }
 
 interface Notification {
@@ -55,7 +57,7 @@ export const NotificationProvider: React.FC = ({ children }) => {
         backgroundColor={error ? "#e03837" : success ? "#00b003" : "#312e38"}
       />
 
-      <NotificationContext.Provider value={{ addNotification }}>
+      <NotificationContext.Provider value={{ addNotification, error, success }}>
         {children}
       </NotificationContext.Provider>
     </NotifierWrapper>
