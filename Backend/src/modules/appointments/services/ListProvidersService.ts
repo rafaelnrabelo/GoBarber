@@ -1,8 +1,10 @@
 import { injectable, inject } from "tsyringe";
+import { classToClass } from "class-transformer";
 
 import User from "@modules/users/infra/typeorm/entities/User";
 import IUsersRepository from "@modules/users/repositories/IUsersRepository";
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+import { AdvancedConsoleLogger } from "typeorm";
 
 @injectable()
 class ListProvidersService {
@@ -23,7 +25,10 @@ class ListProvidersService {
         except_user_id: provider_id,
       });
 
-      await this.cacheProvider.save(`providers-list:${provider_id}`, users);
+      await this.cacheProvider.save(
+        `providers-list:${provider_id}`,
+        classToClass(users)
+      );
     }
 
     return users;
