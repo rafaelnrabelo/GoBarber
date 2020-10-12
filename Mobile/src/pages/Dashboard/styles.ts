@@ -35,6 +35,15 @@ export const UserAvatar = styled.Image`
   border-radius: 28px;
 `;
 
+export const UserAvatarPlaceholder = styled.View`
+  height: 56px;
+  width: 56px;
+  border-radius: 28px;
+  background-color: #3e3c43;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ProvidersList = styled(
   FlatList as new () => FlatList<Provider>
 ).attrs({

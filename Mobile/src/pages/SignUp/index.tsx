@@ -102,65 +102,63 @@ const SignUp: React.FC = () => {
   );
 
   return (
-    <>
-      <ScrollView
-        contentContainerStyle={{ flex: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Container>
-          <Image source={logoImg} />
-          <View>
-            <Title>Crie sua conta</Title>
-          </View>
-          <Form ref={formRef} onSubmit={handleSignUp}>
-            <Input
-              name="name"
-              icon="user"
-              placeholder="Nome"
-              returnKeyType="next"
-              onSubmitEditing={() => {
-                emailInputRef.current?.focus();
-              }}
-            />
-            <Input
-              ref={emailInputRef}
-              name="email"
-              icon="mail"
-              placeholder="E-mail"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              returnKeyType="next"
-              onSubmitEditing={() => {
-                passwordInputRef.current?.focus();
-              }}
-            />
-            <Input
-              ref={passwordInputRef}
-              name="password"
-              icon="lock"
-              placeholder="Senha"
-              secureTextEntry
-              returnKeyType="done"
-              onSubmitEditing={() => {
-                formRef.current?.submitForm();
-              }}
-            />
-          </Form>
-          <Button
-            loading={loading}
-            onPress={() => {
+    <ScrollView
+      contentContainerStyle={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Container>
+        <Image source={logoImg} />
+        <View>
+          <Title>Crie sua conta</Title>
+        </View>
+        <Form ref={formRef} onSubmit={handleSignUp}>
+          <Input
+            name="name"
+            icon="user"
+            placeholder="Nome"
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              emailInputRef.current?.focus();
+            }}
+          />
+          <Input
+            ref={emailInputRef}
+            name="email"
+            icon="mail"
+            placeholder="E-mail"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              passwordInputRef.current?.focus();
+            }}
+          />
+          <Input
+            ref={passwordInputRef}
+            name="password"
+            icon="lock"
+            placeholder="Senha"
+            secureTextEntry
+            returnKeyType="done"
+            onSubmitEditing={() => {
               formRef.current?.submitForm();
             }}
-          >
-            Cadastrar
-          </Button>
-        </Container>
-      </ScrollView>
+          />
+        </Form>
+        <Button
+          loading={loading}
+          onPress={() => {
+            formRef.current?.submitForm();
+          }}
+        >
+          Cadastrar
+        </Button>
+      </Container>
       <BackToSignInButton onPress={() => navigation.goBack()}>
         <Icon name="arrow-left" size={20} color="#f4ede8" />
         <BackToSignInButtonText>Voltar para logon</BackToSignInButtonText>
       </BackToSignInButton>
-    </>
+    </ScrollView>
   );
 };
 

@@ -24,6 +24,7 @@ import {
   BackButton,
   HeaderTitle,
   UserAvatar,
+  UserAvatarPlaceholder,
   Content,
   ProvidersListContainer,
   ProvidersList,
@@ -207,7 +208,13 @@ const CreateAppointment: React.FC = () => {
             <Icon name="chevron-left" color="#999591" size={28} />
           </BackButton>
           <HeaderTitle>Cabeleireiros</HeaderTitle>
-          <UserAvatar source={{ uri: user.avatar_url }} />
+          {user.avatar_url ? (
+            <UserAvatar source={{ uri: user.avatar_url }} />
+          ) : (
+            <UserAvatarPlaceholder>
+              <Icon name="user" color="#ff9000" size={32} />
+            </UserAvatarPlaceholder>
+          )}
         </Header>
         <Content>
           <ProvidersListContainer>
@@ -240,7 +247,7 @@ const CreateAppointment: React.FC = () => {
                       <ProviderAvatar source={{ uri: provider.avatar_url }} />
                     ) : (
                       <ProviderAvatarPlaceholder>
-                        <Icon name="user" color="#ff9000" size={20} />
+                        <Icon name="user" color="#ff9000" size={18} />
                       </ProviderAvatarPlaceholder>
                     )}
                     <ProviderName selected={selectedProvider === provider.id}>

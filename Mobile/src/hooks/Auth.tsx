@@ -25,8 +25,8 @@ interface AuthContextData {
   user: User;
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
-  signOut(): void;
-  updateUser(user: User): void;
+  signOut(): Promise<void>;
+  updateUser(user: User): Promise<void>;
 }
 
 interface SignInCredentials {

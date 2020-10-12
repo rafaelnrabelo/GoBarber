@@ -15,6 +15,7 @@ import {
   UserName,
   ProfileButton,
   UserAvatar,
+  UserAvatarPlaceholder,
   ProvidersList,
   ProvidersListPlaceholder,
   ProvidersListTitle,
@@ -67,10 +68,14 @@ const Dashboard: React.FC = () => {
             Bem-vindo,{"\n"}
             <UserName>{user.name}</UserName>
           </HeaderTitle>
-          <ProfileButton
-            onPress={() => /* navigation.navigate("Profile") */ signOut()}
-          >
-            <UserAvatar source={{ uri: user.avatar_url }} />
+          <ProfileButton onPress={() => navigation.navigate("Profile")}>
+            {user.avatar_url ? (
+              <UserAvatar source={{ uri: user.avatar_url }} />
+            ) : (
+              <UserAvatarPlaceholder>
+                <Icon name="user" color="#ff9000" size={32} />
+              </UserAvatarPlaceholder>
+            )}
           </ProfileButton>
         </Header>
         <ProvidersList
